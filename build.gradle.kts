@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform") version "1.4-M2-eap-77"
+    id("com.android.library") version "3.2.0"
     id("maven-publish")
 }
 
@@ -13,8 +14,20 @@ repositories {
     }
 }
 
+android {
+    compileSdkVersion(29)
+    defaultConfig {
+        minSdkVersion(19)
+        targetSdkVersion(29)
+    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}
+
 kotlin {
     jvm()
+    android {
+        publishLibraryVariants("release")
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -23,5 +36,6 @@ kotlin {
             }
         }
         val jvmMain by getting {}
+        val androidMain by getting {}
     }
 }
